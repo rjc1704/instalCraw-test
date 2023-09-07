@@ -2,12 +2,13 @@ const puppeteer = require('puppeteer')
 
 const express = require('express')
 const app = express();
-const port = 3000;
+const port = 4000;
 
-app.get("/getInstaData", async(req, res) => {
+app.get("/", async(req, res) => {
   const browser = await puppeteer.launch({headless:'new'});
   const page = await browser.newPage();
   let url = req.query.url
+  console.log(req, url)
   await page.goto(url, { waitUntil: "networkidle0" });
 
   const imgEl = await page.$(
@@ -17,8 +18,8 @@ app.get("/getInstaData", async(req, res) => {
   const imgSrc = await page.evaluate((img) => img.src, imgEl)
   
   await browser.close();
-
-  res.send(imgSrc)
+  console.log(imgSrc)
+  res.send({imgSrc, hashtags:"#13.7챌린지"})
 })
 
 app.listen(port, () => {
