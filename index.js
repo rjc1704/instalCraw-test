@@ -11,13 +11,13 @@ const page = await browser.newPage();
 let url = req.query.url;
 await page.goto(url, { waitUntil: 'networkidle0' });
 
-const imgEl = await page.$('main > div > div > article > div > div > div > div > div > div > img');
+const imgEl = await page.$('main > div > git div > article > div > div > div > div > div > div > img');
 
-const imgSrc = await page.evaluate((img) => img.src, imgEl);
+const ImageUrl = await page.evaluate((img) => img.src, imgEl);
 
 await browser.close();
 
-res.send(imgSrc);
+res.send({ImageUrl, hashtags:"#13.7챌린지"});
 });
 
 app.listen(port, () => {
