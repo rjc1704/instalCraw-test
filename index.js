@@ -1,38 +1,26 @@
-import puppeteer from 'puppeteer';
-function delay( timeout ) {
+const puppeteer = require('puppeteer')
 
-  return new Promise(( resolve ) => {
+const express = require('express')
+const app = express();
+const port = 3000;
 
-    setTimeout( resolve, timeout );
-
-  });
-
-}
-(async () => {
-  // Launch the browser and open a new blank page
+app.get("/get", async(req, res) => {
   const browser = await puppeteer.launch({headless:false});
   const page = await browser.newPage();
   
-  // Navigate the page to a URL
-  await page.setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36");
-  await page.evaluate("navigator.userAgent");
-  await page.goto("https://www.instagram.com/p/CwvJNADvIrQ/", { waitUntil : "networkidle0" } );
-  await delay(50000);
-  //C:\Users\rimsu\Desktop\노드\
-    await page.screenshot({ path: '/Users/rimsu/Desktop/노드/example.png' });
-    await browser.close();
-    console.log(1)
-  // Type into search box
-  // await page.type('.search-box__input', 'automate beyond recorder');
+  await page.goto(req.url, { waitUntil: "networkidle0" });
 
-  // Wait and click on first result
-  // const searchResultSelector = '.search-box__link';
+  const imgEl = await page.$(
+    "main > div > div > article > div > div > div > div > div > div > img"
+  )
 
-
-  // Locate the full title with a unique string
-  // const imgSrc = await page.$('.fb_reset')
+  const imgSrc = await page.evaluate((img) => img.src, imgEl)
   
+  await browser.close();
 
-  // // Print the full title
-  // console.log('The title of this blog post is "%s".', imgSrc);
-})();
+  res.send(imgSrc)
+})
+
+app.listen(port, () => {
+  console.log(`listening ${port}`)
+})
