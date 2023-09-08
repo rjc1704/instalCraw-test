@@ -9,7 +9,6 @@
   },
   "author": ",",
   "license": "all",
-  "type": "commonjs",
   "private": true,
   "dependencies": {
   "express": "^4.18.2",
@@ -17,7 +16,7 @@
   "cors": "^2.8.5"
   },
   "scripts": {
-  "test": "echo \"Error: no test specified\" && exit 1"
+  "start": "node index.js"
   },
   "keywords": []
   }

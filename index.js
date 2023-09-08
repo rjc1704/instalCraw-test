@@ -6,7 +6,6 @@ const port = 4001;
 app.use(cors());
 
 app.get('/', (req, res) => {
-  
   const url = req.query.url;
   async function get(url) {
     try {
