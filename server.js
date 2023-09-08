@@ -1,4 +1,5 @@
-const puppeteer = require("puppeteer");
+const puppeteer = require("puppeteer-core");
+const { executablePath } = require("puppeteer");
 const express = require("express");
 const app = express();
 const cors = require("cors");
@@ -12,7 +13,11 @@ app.get("/getInstaData", (req, res) => {
   console.log("url: ", url);
   async function get(url) {
     try {
-      const browser = await puppeteer.launch({ headless: "new" });
+      const browser = await puppeteer.launch({
+        headless: "new",
+        args: ["--no-sandbox", "--disable-setuid-sandbox"],
+        executablePath: executablePath(),
+      });
       const page = await browser.newPage();
 
       await page.goto(url, { waitUntil: "networkidle0" });
