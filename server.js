@@ -14,6 +14,7 @@ app.get("/getInstaData", (req, res) => {
     try {
       const browser = await puppeteer.launch({ headless: "new" });
       const page = await browser.newPage();
+
       await page.goto(url, { waitUntil: "networkidle0" });
       const imgEl = await page.$(
         "main > div > div > article > div > div > div > div > div > div > img"
