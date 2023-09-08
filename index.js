@@ -4,8 +4,10 @@ const app = express();
 const cors = require('cors');
 const port = 3000;
 app.use(cors());
-
-app.get('/', (req, res) => {
+app.get('/', (req, res)=>{
+  res.send("응답")
+})
+app.get('/getInstaData', (req, res) => {
   const url = req.query.url;
   async function get(url) {
     try {
@@ -15,7 +17,7 @@ app.get('/', (req, res) => {
       const imgEl = await page.$('main > div > git div > article > div > div > div > div > div > div > img');
       const ImageUrl = await page.evaluate((img) => img.src, imgEl);
       await browser.close();
-      res.send({ImageUrl, hashtags:"#13.7챌린지"});
+      res.json({ImageUrl, hashtags:"#13.7챌린지"});
     } catch (error) {
       console.log(error)
       res.status(500).send(error.message);
