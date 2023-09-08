@@ -18,5 +18,8 @@
   "scripts": {
     "start": "node server.js"
   },
-  "keywords": []
+  "keywords": [],
+  "engines": {
+    "node": "16.x"
+  }
 }
